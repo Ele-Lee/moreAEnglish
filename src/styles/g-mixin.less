@@ -1,0 +1,99 @@
+
+.page() {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.wh(@w, @h: @w) {
+    width: @w;
+    height: @h;
+}
+
+._image-size(@url) {
+    width: unit(image-width(@url) / (@desigin_width/10), rem);
+    height: unit(image-height(@url)/ (@desigin_width/10), rem);
+}
+
+.bg-cover (@img, @pathIndex: 1) {
+    @path: extract(@paths, @pathIndex);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+    background-image: url('~@/assets/@{path}/@{img}.png');
+    ._image-size('./src/assets/@{path}/@{img}.png');
+}
+
+.bg-contain (@img, @pathIndex: 1) {
+    @path: extract(@paths, @pathIndex);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+    background-image: url('~@/assets/@{path}/@{img}.png');
+    ._image-size('./src/assets/@{path}/@{img}.png');
+}
+
+.contain() {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+}
+
+.flex(@j: center, @a: center) {
+    display: flex;
+    justify-content: @j;
+    align-items: @a;
+}
+
+.flex-c(@j: center, @a: center) {
+    .flex(@j, @a);
+    flex-direction: column;
+}
+
+.p-center(@t: 50%, @l: 50%) {
+    position: absolute;
+    top: @t;
+    left: @l;
+    transform+_: translate(-50%, -50%);
+}
+.p-center-b(@b: 50%, @l: 50%) {
+    position: absolute;
+    bottom: @b;
+    left: @l;
+    transform+_: translate(-50%, -50%);
+}
+
+.r-center(@t: -50%, @l: -50%) {
+    position: relative;
+    left: 50%;
+    transform+_: translate(@l, @t);
+}
+
+.p-bottom(@b: 0) {
+    position: absolute;
+    bottom: @b;
+    left: 0;
+}
+.p-top(@t: 0) {
+    position: absolute;
+    top: @t;
+    left: 0;
+}
+
+.click-fix() {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select:none;
+}
+
+.border-horn-hidden-fix(@rem) {
+    border-radius: @rem;
+    overflow: hidden;
+    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+}
