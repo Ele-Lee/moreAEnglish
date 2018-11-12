@@ -9,10 +9,13 @@ export default {
     },
     mounted() {
         console.log('mounted preload')
-        this.$preLoadAssets().then(() => {
-            // this.loaded = true
-            this.$loaded && this.$loaded()
-        })
+        // setTimeout(() => {
+            Promise.all([this.$preLoadAssets()]).then(() => {
+                // this.loaded = true
+                this.$loaded && this.$loaded()
+            })
+        // }, 0)
+
     },
     methods: {
         $preLoadAssets() {
@@ -27,6 +30,7 @@ export default {
                 const loaded = (e) => {
                     loadedAssets++;
                     this.mixinPercentage = ~~((loadedAssets / assetsLength) * 100)
+                    console.log(this.mixinPercentage+'%', loadedAssets, assetsLength)
                     if (loadedAssets >= assetsLength) {
                         // 释放内存
                         needLoadAssets = null

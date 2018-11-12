@@ -20,7 +20,7 @@ import classLoading from '@/mixins/classLoading.js';
                 ['def', require.context('@/assets/class2/def')],
                 ['mno', require.context('@/assets/class2/mno')],
                 ['uvw', require.context('@/assets/class2/uvw')],
-                // ['common', require.context('@/assets/class2/common', true)]
+                // ['common', require.context('@/assets/class1/common/loading', true)]
             ])
         },
     };

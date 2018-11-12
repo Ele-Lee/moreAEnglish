@@ -18,10 +18,10 @@ export default new Router({
       path: '/review',
       component: Review
     },
-    {
-      path: '/debug',
-      component: Write
-    },
+    // {
+    //   path: '/debug',
+    //   component: Write
+    // },
     {
       path: '/class1',
       component: () => import(/* webpackChunkName: "class1" */ './pages/class1/Home.vue'),

@@ -23,7 +23,7 @@ import classLoading from '@/mixins/classLoading.js';
                 ['abc', require.context('@/assets/class1/abc')],
                 ['jkl', require.context('@/assets/class1/jkl')],
                 ['sty', require.context('@/assets/class1/sty')]
-                // ['common', require.context('@/assets/class1/common', true)]
+                // ['common', require.context('@/assets/class1/common/loading', true)]
             ])
         },
     };

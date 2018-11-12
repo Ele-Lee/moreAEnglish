@@ -17,10 +17,10 @@ import classLoading from '@/mixins/classLoading.js';
         mixins: [classLoading, preload],
         created() {
             this.$assetsMap = new Map([
-                ['ghi', require.context('@/assets/class3/ghi')],
-                ['pqr', require.context('@/assets/class3/pqr')],
-                ['xyz', require.context('@/assets/class3/xyz')],
-                // ['common', require.context('@/assets/class3/common', true)]
+                ['ghi', require.context('@/assets/class3/ghi', true)],
+                ['pqr', require.context('@/assets/class3/pqr', true)],
+                ['xyz', require.context('@/assets/class3/xyz', true)],
+                // ['common', require.context('@/assets/class3/common/loading', true)]
             ])
         },
     };

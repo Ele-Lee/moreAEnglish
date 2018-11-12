@@ -39,9 +39,9 @@
                 require.context('@/assets/home/'),
                 require.context('@/assets/review/'),
                 require.context('@/assets/classCommon'),
-                require.context('@/assets/class1/common', true),
-                require.context('@/assets/class2/common', true),
-                require.context('@/assets/class3/common', true),
+                require.context('@/assets/class1/common/loading', true),
+                require.context('@/assets/class2/common/loading', true),
+                require.context('@/assets/class3/common/loading', true),
             ]
         },
         computed: {

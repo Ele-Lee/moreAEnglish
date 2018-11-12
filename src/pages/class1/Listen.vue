@@ -21,19 +21,20 @@
             </div> -->
             <div id="test" :style="test"></div>
             <div id="test2" :style="test2"></div>
-                <!-- <Letter v-for="letter in listenClassKey" :key="letter" :sprite-id="letter" :class="letter" /> -->
-                <Letter v-for="letter in 'Aa'" :key="letter" :sprite-id="letter"
-                    :class="letter" :style="testL" />
+            <!-- <Letter v-for="letter in listenClassKey" :key="letter" :sprite-id="letter" :class="letter" /> -->
+            <Letter v-for="letter in 'Aa'" :key="letter" :sprite-id="letter"
+                :class="letter" :style="testL" />
             <!-- <div class="letter__wrapper" >
             </div> -->
         </div>
         <div class="lights" @touchstart.stop="listenLetter">
-            <div class="light" v-for="light in 3" :key="light" :data-index="light" :class="listenTime > light-1?'on':'off'" />
+            <div class="light" v-for="light in 3" :key="light" :data-index="light"
+                :class="listenTime > light-1?'on':'off'" />
             <div v-show="listenTime === 0" class="guidedFinger" :data-index="1" />
         </div>
-        <div class="nextBtn" @touchend="nextClass" :class="finishListen && 'active'" >
-            <div class="off"/>
-            <div class="on" :class="finishListen && 'active'"/>
+        <div class="nextBtn" @touchend="nextClass" :class="finishListen && 'active'">
+            <div class="off" />
+            <div class="on" :class="finishListen && 'active'" />
         </div>
     </div>
 </template>
@@ -64,26 +65,26 @@
                 return 'a'[0].toLowerCase();
             },
             finishListen() {
-                return SHOULD_LISTEN_TIME === this.listenTime
+                return SHOULD_LISTEN_TIME === this.listenTime;
             }
         },
         mounted() {
             this.$audio.play(this.classMusicId);
-            const {width, height} = this.$refs.animal.getBoundingClientRect()
-            const h = height*2/714
-            const w = width*2/445
-            const factor = Math.min(h, w)
+            const { width, height } = this.$refs.animal.getBoundingClientRect();
+            const h = (height * 2) / 714;
+            const w = (width * 2) / 445;
+            const factor = Math.min(h, w);
             // console.log(h, w)
             this.test = {
-                bottom: factor*300+ 'px',
-            }
+                bottom: factor * 300 + 'px'
+            };
             this.test2 = {
-                bottom: factor*230+ 'px',
-            }
+                bottom: factor * 230 + 'px'
+            };
             this.testL = {
-                bottom: factor*118+ 'px',
-                height: factor*67 + 'px',
-            }
+                bottom: factor * 118 + 'px',
+                height: factor * 67 + 'px'
+            };
             // this.eyesOff= {
             //     bottom: factor*295+ 'px',
             // }
@@ -96,14 +97,17 @@
             nextClass() {
                 // this.finishClass('listen')
             },
-            listenLetter({target: {dataset: {index}}}) {
-                console.log('in', index - 1, this.listenTime, index - 1 === this.listenTime)
+            listenLetter({
+                target: {
+                    dataset: { index }
+                }
+            }) {
+                console.log('in', index - 1, this.listenTime, index - 1 === this.listenTime);
                 if (index - 1 === this.listenTime) {
-                    ++this.listenTime
+                    ++this.listenTime;
                     this.$audio.play(`letter_${this.letterKey}`).then(() => {
-                        this.finishListen && this.$audio.play(`完成音效`)
+                        this.finishListen && this.$audio.play(`完成音效`);
                     });
-
                 }
             }
         }
@@ -111,7 +115,8 @@
 </script>
 
 <style lang="less">
-    @paths: 'class1/common', 'class1/abc', 'class1/jkl', 'class1/sty', 'classCommon';
+    @paths: 'class1/common', 'class1/abc', 'class1/jkl', 'class1/sty', 'classCommon',
+        'classCommon/titles';
     #test {
         position: absolute;
         height: 1px;
@@ -176,9 +181,9 @@
             .bg-cover('bg_footer');
         }
         > .title {
-            flex: .25;
+            flex: 0.25;
             z-index: 1;
-            .bg-contain('listen_title');
+            .bg-contain('listen_title1', 6);
             background-position-y: bottom;
         }
         > .animal {
@@ -205,12 +210,12 @@
             }
             > .hands {
                 position: absolute;
-bottom: 5.9rem;
-z-index: -1;
-                > .hand {
-                position: absolute;
+                bottom: 5.9rem;
                 z-index: -1;
-                // bottom: 5.9rem;
+                > .hand {
+                    position: absolute;
+                    z-index: -1;
+                    // bottom: 5.9rem;
                     &.left {
                         left: 0.477rem;
                         .bg-contain('animation_leftHand1', 2);
@@ -233,23 +238,23 @@ z-index: -1;
             //     // height: 3.5rem;
             //     // transform: translateX(-50%);
             //     transform-origin: bottom;
-                > .Letter {
-                    width: 100%;
-                    position: absolute;
-                    left: 0;
+            > .Letter {
+                width: 100%;
+                position: absolute;
+                left: 0;
 
-                    fill: rgb(255, 104, 105);
-                    &.A {
-                        // height: 100%;
-                        // height: 1.6rem;
-                        // width: 1.58rem;
-                    }
-                    &.a {
-                        // height: 100%;
-                        // width: 1rem;
-                        // height: 3.25rem;
-                    }
+                fill: rgb(255, 104, 105);
+                &.A {
+                    // height: 100%;
+                    // height: 1.6rem;
+                    // width: 1.58rem;
                 }
+                &.a {
+                    // height: 100%;
+                    // width: 1rem;
+                    // height: 3.25rem;
+                }
+            }
             // }
         }
         > .lights {
