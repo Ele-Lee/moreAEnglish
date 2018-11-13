@@ -13,28 +13,26 @@
         <!-- flex -->
         <div class="title" />
         <div class="animal" v-if="currentLevelKey === 'abc'" ref="animal">
-            <!-- <div class="eyes on" :style="eyesOn"/>
-            <div class="eyes off" :style="eyesOff" />
-            <div class="hands">
+            <div class="body">
+                <div class="eyes on" />
+                <div class="eyes off" />
                 <div class="hand left" />
                 <div class="hand right" />
-            </div> -->
-            <div id="test" :style="test"></div>
-            <div id="test2" :style="test2"></div>
-            <!-- <Letter v-for="letter in listenClassKey" :key="letter" :sprite-id="letter" :class="letter" /> -->
-            <Letter v-for="letter in 'Aa'" :key="letter" :sprite-id="letter"
-                :class="letter" :style="testL" />
-            <!-- <div class="letter__wrapper" >
-            </div> -->
+            </div>
+
+            <!-- <div class="letter__wrapper" :style="test"> -->
+                <!-- <Letter v-for="letter in listenClassKey" :key="letter" :sprite-id="letter" :class="letter" /> -->
+                <!-- <Letter v-for="letter in 'A'" :key="letter" :sprite-id="letter"
+                    :class="letter" /> -->
+            <!-- </div> -->
         </div>
         <div class="lights" @touchstart.stop="listenLetter">
-            <div class="light" v-for="light in 3" :key="light" :data-index="light"
-                :class="listenTime > light-1?'on':'off'" />
+            <div class="light" v-for="light in 3" :key="light" :data-index="light" :class="listenTime > light-1?'on':'off'" />
             <div v-show="listenTime === 0" class="guidedFinger" :data-index="1" />
         </div>
-        <div class="nextBtn" @touchend="nextClass" :class="finishListen && 'active'">
-            <div class="off" />
-            <div class="on" :class="finishListen && 'active'" />
+        <div class="nextBtn" @touchend="nextClass" :class="finishListen && 'active'" >
+            <div class="off"/>
+            <div class="on" :class="finishListen && 'active'"/>
         </div>
     </div>
 </template>
@@ -51,11 +49,7 @@
                 listenTime: 0,
                 SHOULD_LISTEN_TIME: 3,
                 flexScaleRatio: 0,
-                test: {},
-                test2: {},
-                testL: {},
-                eyesOn: {},
-                eyesOff: {}
+                test: {}
             };
         },
         computed: {
@@ -65,49 +59,32 @@
                 return 'a'[0].toLowerCase();
             },
             finishListen() {
-                return SHOULD_LISTEN_TIME === this.listenTime;
+                return SHOULD_LISTEN_TIME === this.listenTime
             }
         },
-        mounted() {
-            this.$audio.play(this.classMusicId);
-            const { width, height } = this.$refs.animal.getBoundingClientRect();
-            const h = (height * 2) / 714;
-            const w = (width * 2) / 445;
-            const factor = Math.min(h, w);
-            // console.log(h, w)
-            this.test = {
-                bottom: factor * 300 + 'px'
-            };
-            this.test2 = {
-                bottom: factor * 230 + 'px'
-            };
-            this.testL = {
-                bottom: factor * 118 + 'px',
-                height: factor * 67 + 'px'
-            };
-            // this.eyesOff= {
-            //     bottom: factor*295+ 'px',
-            // }
-            // this.eyesOn = {
-            //     bottom: factor*290+ 'px',
-            // }
-        },
+        // mounted() {
+        //     this.$audio.play(this.classMusicId);
+        //     const {width, height} = this.$refs.animal.getBoundingClientRect()
+        //     const h = height*2/714
+        //     const w = width*2/445
+        //     this.test = {
+        //         bottom: w*20+ 'px',
+        //         width: w*40 + 'px'
+        //     }
+        // },
         methods: {
             ...mapActions(['finishClass']),
             nextClass() {
                 // this.finishClass('listen')
             },
-            listenLetter({
-                target: {
-                    dataset: { index }
-                }
-            }) {
-                console.log('in', index - 1, this.listenTime, index - 1 === this.listenTime);
+            listenLetter({target: {dataset: {index}}}) {
+                console.log('in', index - 1, this.listenTime, index - 1 === this.listenTime)
                 if (index - 1 === this.listenTime) {
-                    ++this.listenTime;
+                    ++this.listenTime
                     this.$audio.play(`letter_${this.letterKey}`).then(() => {
-                        this.finishListen && this.$audio.play(`完成音效`);
+                        this.finishListen && this.$audio.play(`完成音效`)
                     });
+
                 }
             }
         }
@@ -115,20 +92,7 @@
 </script>
 
 <style lang="less">
-    @paths: 'class1/common', 'class1/abc', 'class1/jkl', 'class1/sty', 'classCommon',
-        'classCommon/titles';
-    #test {
-        position: absolute;
-        height: 1px;
-        width: 100%;
-        background-color: red;
-    }
-    #test2 {
-        position: absolute;
-        height: 1px;
-        width: 100%;
-        background-color: red;
-    }
+    @paths: 'class1/common', 'class1/abc', 'class1/jkl', 'class1/sty', 'classCommon', 'classCommon/titles';
     .class1Listen {
         .page();
         .flex-c(space-around);
@@ -181,41 +145,44 @@
             .bg-cover('bg_footer');
         }
         > .title {
-            flex: 0.25;
+            flex: .25;
             z-index: 1;
             .bg-contain('listen_title1', 6);
             background-position-y: bottom;
         }
         > .animal {
             flex: 1;
-            position: relative;
+
             z-index: 1;
-            .bg-contain('giraffe_body', 2);
-            background-position-y: bottom;
-            > .eyes {
+            .flex-c(flex-end);
+            > .body {
+                position: relative;
+                .bg-contain('giraffe_body', 2);
+                // height: 100%;
+                // width: 100%;
+                // background-position-y: bottom;
+                > .eyes {
                 position: absolute;
                 animation: show 1s infinite alternate;
+                 bottom: 80%;
                 &.on {
                     // bottom: 7.874rem;
                     left: 2.208rem;
+
                     .bg-contain('animation_eyes1--on', 2);
                     animation-timing-function: step-start;
                 }
                 &.off {
                     // bottom: 7.9rem;
+
                     left: 2.087rem;
                     .bg-contain('animation_eyes1--off', 2);
                     animation-timing-function: step-end;
                 }
-            }
-            > .hands {
-                position: absolute;
-                bottom: 5.9rem;
-                z-index: -1;
                 > .hand {
-                    position: absolute;
-                    z-index: -1;
-                    // bottom: 5.9rem;
+                position: absolute;
+                z-index: -1;
+                bottom: 5.9rem;
                     &.left {
                         left: 0.477rem;
                         .bg-contain('animation_leftHand1', 2);
@@ -231,30 +198,33 @@
                 }
             }
 
+        }
+
             // > .letter__wrapper {
+            //     // width: 10%;
+            //     // height: 20%;
+            //     // max-height: 20%;
             //     .flex(center, flex-end);
             //     position: absolute;
-            //     // left: 50%;
-            //     // height: 3.5rem;
-            //     // transform: translateX(-50%);
-            //     transform-origin: bottom;
-            > .Letter {
-                width: 100%;
-                position: absolute;
-                left: 0;
-
-                fill: rgb(255, 104, 105);
-                &.A {
-                    // height: 100%;
-                    // height: 1.6rem;
-                    // width: 1.58rem;
-                }
-                &.a {
-                    // height: 100%;
-                    // width: 1rem;
-                    // height: 3.25rem;
-                }
-            }
+            //     left: 50%;
+            //     transform: translateX(-50%);
+            //     // top: calc(100% - 9.25rem);
+            //     // bottom: 20%;
+            //     // left: 0;
+            //     // flex: 1;
+            //     > .Letter {
+            //         fill: rgb(255, 104, 105);
+            //         &.A {
+            //             height: 100%;
+            //             // height: 1.6rem;
+            //             width: 1.58rem;
+            //         }
+            //         &.a {
+            //             height: 100%;
+            //             width: 1rem;
+            //             height: 3.25rem;
+            //         }
+            //     }
             // }
         }
         > .lights {

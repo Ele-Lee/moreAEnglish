@@ -9,12 +9,12 @@ export default {
     },
     mounted() {
         console.log('mounted preload')
-        // setTimeout(() => {
+        setTimeout(() => {
             Promise.all([this.$preLoadAssets()]).then(() => {
                 // this.loaded = true
                 this.$loaded && this.$loaded()
             })
-        // }, 0)
+        }, 0)
 
     },
     methods: {
@@ -27,10 +27,13 @@ export default {
                         return acm
                     }, [])
                 }
+                let m = 0
+                    let i = 0
                 const loaded = (e) => {
                     loadedAssets++;
                     this.mixinPercentage = ~~((loadedAssets / assetsLength) * 100)
-                    console.log(this.mixinPercentage+'%', loadedAssets, assetsLength)
+                    e ? i++ : m++
+                    console.log(this.mixinPercentage+'%', loadedAssets, assetsLength, 'music:', m, 'img:', i)
                     if (loadedAssets >= assetsLength) {
                         // 释放内存
                         needLoadAssets = null
@@ -54,12 +57,15 @@ export default {
                 console.log('preload assets', assetsLength, needLoadAssets)
                 // const requireAll = context => context.keys().map(context);
                 for (let url of needLoadAssets) {
-                    // 图片预加载
-                    if (/^(data\:image)|(\.png|\.gif)$/.test(url)) {
+                        // 图片预加载
+                    if (/^(data\:image)|(\.png|\.gif|\.jpg)$/.test(url)) {
                         preloadImg(url)
                         // 音乐预加载
                     } else if (/(\.mp3|\.wav)$/.test(url)) {
                         preloadMusic(url)
+                    } else {
+                        console.error('unPreLoad', url)
+                        loaded()
                     }
                 }
             });

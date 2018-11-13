@@ -28,3 +28,29 @@ export default {
         },
     }
 }
+
+
+// mounted() {
+//     this.$audio.play(this.classMusicId);
+//     const { width, height } = this.$refs.animal.getBoundingClientRect();
+//     const h = (height * 2) / 714;
+//     const w = (width * 2) / 445;
+//     const factor = Math.min(h, w);
+//     // console.log(h, w)
+//     // this.test = {
+//     //     bottom: factor * 300 + 'px'
+//     // };
+//     // this.test2 = {
+//     //     bottom: factor * 230 + 'px'
+//     // };
+//     // this.testL = {
+//     //     bottom: factor * 118 + 'px',
+//     //     height: factor * 67 + 'px'
+//     // };
+//     // this.eyesOff= {
+//     //     bottom: factor*295+ 'px',
+//     // }
+//     // this.eyesOn = {
+//     //     bottom: factor*290+ 'px',
+//     // }
+// },

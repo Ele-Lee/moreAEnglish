@@ -38,7 +38,7 @@
             };
         },
         created() {
-            // const urls = requireAll(require.context('@/assets/review/img'));
+            const urls = requireAll(require.context('@/assets/review/img'));
             this._initItemUrls(urls);
             //用来防止两个音效一起播放
             this.preSoundId = null;

@@ -14,6 +14,7 @@ class MusicManage {
     }
 
     preload(src) {
+        console.log(src)
         return new Promise((resolve) => {
             const key = src.split(/\/media\/(.+?)\./)[1]
             const audio = new Howl({ src, preload: true });
