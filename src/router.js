@@ -7,50 +7,53 @@ import Review from './pages/Review.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      component: Home
-    },
-    {
-      path: '/review',
-      component: Review
-    },
-    // {
-    //   path: '/debug',
-    //   component: Write
-    // },
-    {
-      path: '/class1',
-      component: () => import(/* webpackChunkName: "class1" */ './pages/class1/Home.vue'),
-    },
-    {
-      path: '/class1/listen',
-      component: () => import(/* webpackChunkName: "class1" */ './pages/class1/Listen.vue'),
-    },
-    {
-      path: '/class2',
-      component: () => import(/* webpackChunkName: "class2" */ './pages/class2/Home.vue'),
-      children: [
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [{
+            path: '/',
+            component: Home
+        },
+        {
+            path: '/review',
+            component: Review
+        },
         // {
-        //   path: 'posts',
-        //   component: UserPosts
-        // }
-      ]
-    },
-    {
-      path: '/class3',
-      component: () => import(/* webpackChunkName: "class3" */ './pages/class3/Home.vue'),
-      children: [
-        // {
-        //   path: 'posts',
-        //   component: UserPosts
-        // }
-      ]
-    },
-  ]
+        //   path: '/debug',
+        //   component: Write
+        // },
+        {
+            path: '/class1',
+            component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Home.vue'),
+        },
+        {
+            path: '/class1/listen',
+            component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Listen.vue'),
+        },
+        {
+            path: '/write',
+            component: () => import( /* webpackChunkName: "class1" */ './pages/common/Write.vue'),
+        },
+        {
+            path: '/class2',
+            component: () => import( /* webpackChunkName: "class2" */ './pages/class2/Home.vue'),
+            children: [
+                // {
+                //   path: 'posts',
+                //   component: UserPosts
+                // }
+            ]
+        },
+        {
+            path: '/class3',
+            component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Home.vue'),
+            children: [
+                // {
+                //   path: 'posts',
+                //   component: UserPosts
+                // }
+            ]
+        },
+    ]
 })
 
 

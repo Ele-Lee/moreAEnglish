@@ -17,24 +17,24 @@
     height: unit(image-height(@url)/ (@desigin_width/10), rem);
 }
 
-.bg-cover (@img, @pathIndex: 1) {
+.bg-cover (@img, @pathIndex: 1, @suffix: 'png') {
     @path: extract(@paths, @pathIndex);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content-box;
-    background-image: url('~@/assets/@{path}/@{img}.png');
-    ._image-size('./src/assets/@{path}/@{img}.png');
+    background-image: url('~@/assets/@{path}/@{img}.@{suffix}');
+    ._image-size('./src/assets/@{path}/@{img}.@{suffix}');
 }
 
-.bg-contain (@img, @pathIndex: 1) {
+.bg-contain (@img, @pathIndex: 1, @suffix: 'png') {
     @path: extract(@paths, @pathIndex);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content-box;
-    background-image: url('~@/assets/@{path}/@{img}.png');
-    ._image-size('./src/assets/@{path}/@{img}.png');
+    background-image: url('~@/assets/@{path}/@{img}.@{suffix}');
+    ._image-size('./src/assets/@{path}/@{img}.@{suffix}');
 }
 
 .contain() {

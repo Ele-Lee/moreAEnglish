@@ -1,31 +1,30 @@
 <template>
     <div class="Class1Home">
-        <div class="top__mask"/>
-        <div class="bottom cloud"/>
-        <div class="bottom children"/>
-        <div class="title"/>
+        <div class="top__mask" />
+        <div class="bottom cloud" />
+        <div class="bottom children" />
+        <div class="title" />
         <!-- 加载页 -->
-        <Loading v-show="!mixinLoaded" :percentage="mixinPercentage"/>
+        <Loading v-show="!mixinLoaded" :percentage="mixinPercentage" />
         <!-- 开始页 -->
-        <StartTitle :show="mixinLoaded" :classType="1"/>
+        <StartTitle :show="mixinLoaded" :classType="1" />
     </div>
 </template>
 
 <script>
-import preload from '@/mixins/preload.js';
-import classLoading from '@/mixins/classLoading.js';
+    import preload from '@/mixins/preload.js';
+    import classLoading from '@/mixins/classLoading.js';
     export default {
         name: 'Class1Home',
         mixins: [classLoading, preload],
-        created() {
-            console.log('created')
+        beforeMount() {
             this.$assetsMap = new Map([
                 ['abc', require.context('@/assets/class1/abc')],
                 ['jkl', require.context('@/assets/class1/jkl')],
-                ['sty', require.context('@/assets/class1/sty')]
-                // ['common', require.context('@/assets/class1/common/loading', true)]
-            ])
-        },
+                ['sty', require.context('@/assets/class1/sty')],
+                ['common', require.context('@/assets/class1/common', true)]
+            ]);
+        }
     };
 </script>
 
@@ -44,14 +43,14 @@ import classLoading from '@/mixins/classLoading.js';
             .p-bottom();
             &.cloud {
                 padding-bottom: 2.2rem;
-                .bg-cover('bg_footer_cloud', 2)
+                .bg-cover('bg_footer_cloud', 2);
             }
             &.children {
-                .bg-cover('bg_reading')
+                .bg-cover('bg_reading');
             }
         }
         > .title {
-            flex: .25;
+            flex: 0.25;
             .bg-contain('start_title');
         }
         > .Loading {
@@ -64,15 +63,15 @@ import classLoading from '@/mixins/classLoading.js';
                 .bg-cover('loadingBar--full');
             }
         }
-        > .StartTitle{
+        > .StartTitle {
             .p-center(45%);
             @media @ipad {
                 top: 40.5%;
             }
             > .lettersBg {
-                margin-bottom: .8rem;
+                margin-bottom: 0.8rem;
                 @media @ipad {
-                    margin-bottom: .3rem;
+                    margin-bottom: 0.3rem;
                 }
                 .bg-contain('bg_letters');
                 > .letters {
@@ -80,10 +79,9 @@ import classLoading from '@/mixins/classLoading.js';
                     .p-center(62%);
                 }
             }
-            > .startBtn{
+            > .startBtn {
                 .bg-contain('btn_start');
             }
         }
     }
-
 </style>

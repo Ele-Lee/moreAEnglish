@@ -1,6 +1,10 @@
-import {Howl} from 'howler';
+import {
+    Howl
+} from 'howler';
 
-import {getRandomColor} from './utils.js'
+import {
+    getRandomColor
+} from './utils.js'
 
 class MusicManage {
     constructor() {
@@ -14,21 +18,19 @@ class MusicManage {
     }
 
     preload(src) {
-        console.log(src)
         return new Promise((resolve) => {
             const key = src.split(/\/media\/(.+?)\./)[1]
-            const audio = new Howl({ src, preload: true });
+            const audio = new Howl({
+                src,
+                preload: true
+            });
             const _color = getRandomColor()
-            console.log(`%c start load: ${key}`, `color: ${_color}`)
+            // console.log(`%c start load: ${key}`, `color: ${_color}`)
             audio.once('load', () => {
                 this.loadedAudio.set(key, audio)
-                console.log(`%c loaded: ${key}`, `color: ${_color}`)
+                // console.log(`%c loaded: ${key}`, `color: ${_color}`)
                 resolve()
             })
-            // setTimeout(() => {
-            //     this.loadedAudio.set(key, audio)
-            //     resolve()
-            // }, 1000)
         })
     }
 
@@ -40,8 +42,12 @@ class MusicManage {
         }
     }
 
-    play(key, { loop = false, force = false } = {}) {
+    play(key, {
+        loop = false,
+        force = false
+    } = {}) {
         return new Promise((resolve, reject) => {
+            // console.log(key, !this.playingList.has(key))
             if (this.playingList.has(key)) return;
             if (this.loadedAudio.has(key)) {
                 const _over = () => {
@@ -62,17 +68,15 @@ class MusicManage {
         })
     }
 
-    stop(keys) {
+    stop(_keys) {
+        const keys = Array.isArray(_keys) ? _keys : [_keys]
         return new Promise(resolve => {
             let stopSum = 0
             const stopLength = keys.length
-            // console.log(keys, stopLength)
-            // if (stopLength === undefined) resolve()
             const _stop = (key) => {
                 key && this.playingList.delete(key)
-                ++stopSum === stopLength && resolve()
+                    ++stopSum === stopLength && resolve()
             }
-            // console.log('keys', keys)
             for (let key of keys) {
                 if (this.playingList.has(key)) {
                     const audio = this.loadedAudio.get(key)
@@ -93,7 +97,8 @@ class MusicManage {
                     resolve(id)
                 }, false);
             } else {
-                reject()
+                console.warn('no in wx')
+                resolve()
             }
         })
     }

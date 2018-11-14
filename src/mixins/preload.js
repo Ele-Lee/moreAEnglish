@@ -1,5 +1,7 @@
 //必须定义assets变量
-import { requireAll } from '@/utils/functions.js';
+import {
+    requireAll
+} from '@/utils/functions.js';
 export default {
     data() {
         return {
@@ -8,7 +10,6 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted preload')
         setTimeout(() => {
             Promise.all([this.$preLoadAssets()]).then(() => {
                 // this.loaded = true
@@ -28,12 +29,12 @@ export default {
                     }, [])
                 }
                 let m = 0
-                    let i = 0
+                let i = 0
                 const loaded = (e) => {
                     loadedAssets++;
                     this.mixinPercentage = ~~((loadedAssets / assetsLength) * 100)
                     e ? i++ : m++
-                    console.log(this.mixinPercentage+'%', loadedAssets, assetsLength, 'music:', m, 'img:', i)
+                    // console.log(this.mixinPercentage + '%', loadedAssets, assetsLength, 'music:', m, 'img:', i)
                     if (loadedAssets >= assetsLength) {
                         // 释放内存
                         needLoadAssets = null
@@ -54,10 +55,10 @@ export default {
                 if (!Array.isArray(this.$assets)) reject()
                 needLoadAssets = getAssets(this.$assets);
                 assetsLength = needLoadAssets.length;
-                console.log('preload assets', assetsLength, needLoadAssets)
+                // console.log('preload assets', assetsLength, needLoadAssets)
                 // const requireAll = context => context.keys().map(context);
                 for (let url of needLoadAssets) {
-                        // 图片预加载
+                    // 图片预加载
                     if (/^(data\:image)|(\.png|\.gif|\.jpg)$/.test(url)) {
                         preloadImg(url)
                         // 音乐预加载

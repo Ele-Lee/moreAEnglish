@@ -1,29 +1,47 @@
 <template>
-    <svg class="Letter">
-        <use :xlink:href="getSpriteId()"/>
+    <svg class="Letter" :style="svgStyle">
+        <use :xlink:href="getSpriteId()" ref="letter" />
     </svg>
 </template>
 
 <script>
-//大小写的ASCII码阈值
-const ASCII_THRESHOLD = 91
+    import { getLetterName } from '@/utils/functions.js';
     export default {
         name: 'Letter',
         props: {
-            spriteId: String
+            spriteId: String,
+            resetSvgSize: {
+                type: Boolean,
+                default: false
+            }
         },
-        computed: {
+        data() {
+            return {
+                svgStyle: {}
+            };
+        },
+        mounted() {
+            if (this.resetSvgSize) {
+                const { width, height } = this.$refs.letter.getBoundingClientRect();
+                this.svgStyle = {
+                    width: width + 'px',
+                    height: height + 'px'
+                };
+                this.$emit('inited', { width, height });
+            }
         },
         methods: {
             getSpriteId() {
-                const ASCII = +this.spriteId.charCodeAt()
-                //大于阈值小写，反之大写
-                const sign = ASCII > ASCII_THRESHOLD ? '_' : '-'
-                return `#letter${sign}${this.spriteId}`
+                const letterName = getLetterName(this.spriteId);
+                return `#${letterName}`;
             }
         }
     };
 </script>
 
 <style lang="less">
+    .Letter {
+        width: unset;
+        height: unset;
+    }
 </style>

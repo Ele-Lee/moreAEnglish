@@ -1,48 +1,40 @@
 <template>
-    <div class="Home" >
+    <div class="Home">
         <div class="cloud1" />
         <div class="cloud2" />
-        <div
-            v-for="index in 4" :key="index"
-            class="clouds" :class="`clouds_${index}`"
-            :style="{opacity: mixinLoaded ? 1 : 0}"
-        />
+        <div v-for="index in 4" :key="index" class="clouds" :class="`clouds_${index}`"
+            :style="{opacity: mixinLoaded ? 1 : 0}" />
         <div class="title" />
         <!-- 加载页 -->
-        <Loading v-show="!mixinLoaded" :percentage="mixinPercentage"/>
+        <Loading v-show="!mixinLoaded" :percentage="mixinPercentage" />
         <!-- 关卡选择页 -->
         <section class="levels__select" :style="{opacity: mixinLoaded ? 1 : 0}">
             <main class="isles" @touchend="handleLevel">
-                <div
-                    v-for="levelIndex in LEVEL_SUM+1" :key="levelIndex" :data-index="levelIndex"
-                    class="click__areas" :class="levelIndex === LEVEL_SUM+1 ? 'treasure' : `lock lock-${levelIndex}`"
-                    :style="{opacity: latestLevelIndex >= levelIndex ? 0 : 1}"
-                />
+                <div v-for="levelIndex in LEVEL_SUM+1" :key="levelIndex"
+                    :data-index="levelIndex" class="click__areas" :style="{opacity: latestLevelIndex >= levelIndex ? 0 : 1}"
+                    :class="levelIndex === LEVEL_SUM+1 ? 'treasure' : `lock lock-${levelIndex}`" />
             </main>
         </section>
     </div>
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex';
     import preload from '@/mixins/preload.js';
-    import Loading from '@/components/ui/Loading.vue'
+    import Loading from '@/components/ui/Loading.vue';
     const REVIEW_INDEX = 10;
     export default {
         name: 'Home',
         mixins: [preload],
         components: {
-            Loading,
+            Loading
         },
-        created() {
+        beforeMount() {
             this.$assets = [
-                require.context('@/assets/home/'),
-                require.context('@/assets/review/'),
-                require.context('@/assets/classCommon'),
-                require.context('@/assets/class1/common/loading', true),
-                require.context('@/assets/class2/common/loading', true),
-                require.context('@/assets/class3/common/loading', true),
-            ]
+                require.context('@/assets/home/', true),
+                require.context('@/assets/review/', true),
+                require.context('@/assets/classCommon', true)
+            ];
         },
         computed: {
             ...mapGetters(['latestLevelIndex', 'LEVEL_SUM', 'currentClassType'])
@@ -51,20 +43,25 @@
             ...mapActions(['swichLevel']),
             $loaded() {
                 setTimeout(() => {
-                    // this.$audio.play('首页音乐', {loop: true, force: true})
-                    this.mixinLoaded = true
+                    this.$audio.play('bgm_home', { loop: true, force: true });
+                    this.mixinLoaded = true;
                 }, 1000);
             },
-            handleLevel({target: {dataset: {index: levelIndex}}}) {
-                console.log(levelIndex, levelIndex === REVIEW_INDEX)
+            handleLevel({
+                target: {
+                    dataset: { index: levelIndex }
+                }
+            }) {
+                // console.log(levelIndex, levelIndex === REVIEW_INDEX);
                 if (!this.mixinLoaded || !levelIndex) return;
+                this.$audio.stop('bgm_home');
                 //进入宝箱回顾页
                 if (levelIndex == REVIEW_INDEX) {
-                    this.$router.replace('review')
+                    this.$router.replace('review');
                 } else if (this.latestLevelIndex >= levelIndex) {
-                    this.swichLevel(levelIndex)
-                    this.$router.replace(`class${this.currentClassType}`)
-                    console.log("levelIndex: ", levelIndex, "currentClassType:", this.currentClassType)
+                    this.swichLevel(levelIndex);
+                    this.$router.replace(`class${this.currentClassType}`);
+                    console.log('levelIndex: ', levelIndex, 'currentClassType:', this.currentClassType);
                 }
             }
         }
@@ -87,7 +84,7 @@
             .bg-cover('cloud_bottom');
         }
         > .title {
-            flex: .3;
+            flex: 0.3;
             z-index: 4;
             .bg-contain('game_title');
         }
@@ -109,7 +106,7 @@
                     position: absolute;
                     &.lock {
                         .bg-cover('level_lock');
-                        padding: .5rem;
+                        padding: 0.5rem;
                         transform: scale(0.8);
                         &-1 {
                             top: -0.159rem;
@@ -145,37 +142,35 @@
                         }
                         &-9 {
                             top: 6.023rem;
-                            left: 2.510rem;
+                            left: 2.51rem;
                         }
                     }
                     &.treasure {
-                        top: 8.936rem;
-                        left: 1.986rem;
-                        width: 1.5rem;
-                        height: 1.5rem;
+                        top: 8.8rem;
+                        left: 1.8rem;
+                        .wh(2rem);
                     }
                 }
-
             }
         }
-        > .clouds{
+        > .clouds {
             .bg-cover('cloud');
             position: absolute;
             z-index: -1;
             &_1 {
-                top: .83rem;
+                top: 0.83rem;
                 left: -1.24rem;
-                transform: scale(.8);
+                transform: scale(0.8);
             }
             &_2 {
-                top: .31rem;
+                top: 0.31rem;
                 left: 5.26rem;
-                transform: scale(.35);
+                transform: scale(0.35);
             }
             &_3 {
                 top: 4.07rem;
                 left: 7.25rem;
-                transform: scale(.8);
+                transform: scale(0.8);
             }
             &_4 {
                 top: 14.27rem;

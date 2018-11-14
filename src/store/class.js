@@ -4,8 +4,13 @@ export default {
         loadCommonClass: [false, false, false],
         startLearnTimeStamp: 0,
         // CLASS_LENGTH: 35,
-        classes: [],
-        classMusicIndex: 1,
+        classes: [{
+            listen: [],
+            // write: [],
+            write: ['A', 'A', 'A', 'a', 'a', 'a'],
+            read: [],
+        }],
+        // classMusicIndex: 0,
     },
     getters: {
         //学习时间
@@ -33,12 +38,14 @@ export default {
         currentClassType: (state, getters, {
             currentLevelIndex
         }) => (currentLevelIndex % 3 || 0) + 1,
+
         //class要播放的音乐id
-        classMusicId: ({
-            classMusicIndex
-        }, getters, rootState, {
-            currentLevelKey
-        }) => currentLevelKey + '-' + classMusicIndex,
+        // classMusicId: ({
+        //     classMusicIndex
+        // }, getters, rootState, {
+        //     currentLevelKey
+        // }) => currentLevelKey + '-' + classMusicIndex,
+
         //听、写、读class的Key
         listenClassKey: (state) => state.classes[0].listen[0],
         writeClassKey: (state) => state.classes[0].write[0],
@@ -55,17 +62,17 @@ export default {
             state.classes = classes
         },
         listen(state) {
-            state.classes.listen.unshift()
+            state.classes[0].listen.shift()
         },
         write(state) {
-            state.classes.write.unshift()
+            state.classes[0].write.shift()
         },
         read(state) {
-            state.classes.unshift()
+            state.classes[0].shift()
         },
-        handleMusicIndex(state, index) {
-            state.classMusicIndex = index
-        },
+        // handleMusicIndex(state, index) {
+        //     state.classMusicIndex = index
+        // },
     },
     actions: {
         loadedCommon({
@@ -79,6 +86,7 @@ export default {
             rootGetters
         }) {
             const keys = rootGetters.currentLevelKey
+            // console.log(rootGetters)
             let classes = []
             for (let letter of keys) {
                 const lowerCase = letter
@@ -90,7 +98,7 @@ export default {
                 })
             }
             commit('startLearn')
-            commit('handleMusicIndex', 1)
+            // commit('handleMusicIndex', 1)
             commit('initClasses', classes)
         },
         finishClass({
@@ -98,7 +106,7 @@ export default {
             state,
         }, type) {
             type && commit(type)
-            type !== 'read' && commit('handleMusicIndex', ++state.classMusicIndex)
+            // type !== 'read' && commit('handleMusicIndex', ++state.classMusicIndex)
         }
     },
 }

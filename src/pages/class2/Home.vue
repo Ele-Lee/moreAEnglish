@@ -1,28 +1,28 @@
 <template>
     <div class="Class2Home">
-        <div class="bottom__building"/>
-        <div class="title"/>
+        <div class="bottom__building" />
+        <div class="title" />
         <!-- 加载页 -->
-        <Loading v-show="!mixinLoaded" :percentage="mixinPercentage"/>
+        <Loading v-show="!mixinLoaded" :percentage="mixinPercentage" />
         <!-- 开始页 -->
-        <StartTitle :show="mixinLoaded" :classType="2"/>
+        <StartTitle :show="mixinLoaded" :classType="2" />
     </div>
 </template>
 
 <script>
-import preload from '@/mixins/preload.js';
-import classLoading from '@/mixins/classLoading.js';
+    import preload from '@/mixins/preload.js';
+    import classLoading from '@/mixins/classLoading.js';
     export default {
         name: 'Class2Home',
         mixins: [classLoading, preload],
-        created() {
+        beforeMount() {
             this.$assetsMap = new Map([
                 ['def', require.context('@/assets/class2/def')],
                 ['mno', require.context('@/assets/class2/mno')],
                 ['uvw', require.context('@/assets/class2/uvw')],
-                // ['common', require.context('@/assets/class1/common/loading', true)]
-            ])
-        },
+                ['common', require.context('@/assets/class2/common')]
+            ]);
+        }
     };
 </script>
 
@@ -50,24 +50,23 @@ import classLoading from '@/mixins/classLoading.js';
                 .bg-cover('loadingBar--full');
             }
         }
-        > .StartTitle{
+        > .StartTitle {
             .p-center(35%);
             @media @ipad {
                 top: 30%;
             }
             > .lettersBg {
                 .bg-cover('bg_letters');
-                transform: translateY(.5rem);
+                transform: translateY(0.5rem);
                 > .letters {
                     .wh(80%);
                     .p-center(48%);
                 }
             }
-            > .startBtn{
+            > .startBtn {
                 .bg-cover('btn_start');
             }
         }
     }
-
 </style>
 

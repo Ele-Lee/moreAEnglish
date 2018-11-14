@@ -41,11 +41,14 @@ export default new Vuex.Store({
         //通过的关卡数
         hadPassedLevels: state => state.hadPassedLevels,
         //进入关卡的相应key
-        currentLevelKey: ({
-            levels,
-            currentLevelIndex
-        }) => levels[currentLevelIndex]
-
+        currentLevelKey: state => {
+            const {
+                levels,
+                currentLevelIndex
+            } = state
+            return levels[currentLevelIndex]
+        },
+        inHome: (state) => state.inHome
     },
     mutations: {
         passLevel(state) {
@@ -73,7 +76,8 @@ export default new Vuex.Store({
             commit('passLevel')
         },
         swichLevel({
-            commit, dispatch
+            commit,
+            dispatch
         }, level) {
             const levelIndex = level - 1
             commit('swichLevel', levelIndex)

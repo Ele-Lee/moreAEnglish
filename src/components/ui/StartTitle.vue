@@ -1,10 +1,7 @@
 <template>
     <div class="StartTitle" :style="{opacity: show ? 1 : 0}">
         <div class="lettersBg">
-            <div
-                class="letters"
-                :style="{backgroundImage: 'url('+require(`@/assets/class${classType}/${currentLevelKey}/letters_${currentLevelKey}.png`)+')'}"
-            />
+            <div class="letters" :style="{backgroundImage: 'url('+require(`@/assets/class${classType}/${currentLevelKey}/letters_${currentLevelKey}.png`)+')'}" />
         </div>
         <div class="startBtn" @touchend="startLearn" />
     </div>
@@ -25,15 +22,15 @@
             }
         },
         computed: {
-            ...mapGetters(['currentLevelKey', 'classMusicId']),
+            ...mapGetters(['currentLevelKey'])
         },
         methods: {
             ...mapActions(['finishClass']),
             startLearn() {
-                this.$audio.stop([this.classMusicId]).then(() => {
-                    this.finishClass()
-                    this.$router.replace(`class${this.classType}/listen`)
-                })
+                this.$audio.stop(`${this.currentLevelKey}-1`).then(() => {
+                    this.finishClass();
+                    this.$router.replace(`class${this.classType}/listen`);
+                });
             }
         }
     };

@@ -9,7 +9,7 @@
             <div v-for="(item, index) in imgNames" :key="`n${index}`" class="inner itemName"
                 :style="{backgroundImage: `url(${item})`, opacity: (isOddItem && imgIndex === index) ? 1:0}" />
             <div v-for="(item, index) in letterItems" :key="`l${index}`"
-                class="inner itemLetter" :style="{backgroundImage: `url(${item})`, opacity: (!isOddItem && letterIndex === index)? 1:0}" />
+                v-show="reviewImgSum > 0" class="inner itemLetter" :style="{backgroundImage: `url(${item})`, opacity: (!isOddItem && letterIndex === index)? 1:0}" />
         </div>
         <div class="srcollArea">
             <div class="srcollItems" @touchstart.stop="_stopEvent"
@@ -58,6 +58,7 @@
         methods: {
             backHome() {
                 this.$router.replace('/');
+                this.$audio.play('bgm_home', { loop: true, force: true });
             },
             showItem({
                 target: {
@@ -69,7 +70,7 @@
                 const prefix = this.isOddItem ? 'word_' : 'letter_';
                 const audioId = prefix + letter.split(/_(\w+)\./g)[1];
                 this.$audio.stop([this.preSoundId]).then(() => {
-                    console.log('audioId', audioId);
+                    // console.log('audioId', audioId);
                     this._playAudio(audioId);
                 });
                 // console.log(this.showItemIndex, this.isOddItem, this.letterIndex, this.imgIndex, (this.showItemIndex+1)/2 )
@@ -97,7 +98,6 @@
                 this.imgItmes = urls;
                 this.imgNames = names;
                 this.letterItems = letters;
-                // console.log(reviews)
             }
         }
     };
