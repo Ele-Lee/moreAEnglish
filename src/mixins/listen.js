@@ -31,7 +31,8 @@ export default {
     computed: {
         ...mapGetters(['currentLevelKey', 'listenClassKey', 'themeIndex']),
         letterKey() {
-            return this.listenClassKey[0].toLowerCase();
+            // return this.listenClassKey[0].toLowerCase();
+            return 'g'
         },
         finishListen() {
             return SHOULD_LISTEN_TIME === this.listenTime;

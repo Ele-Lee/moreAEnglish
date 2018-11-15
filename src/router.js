@@ -17,10 +17,6 @@ export default new Router({
             path: '/review',
             component: Review
         },
-        // {
-        //   path: '/debug',
-        //   component: Write
-        // },
         {
             path: '/write',
             component: () => import('./pages/common/Write.vue'),
@@ -33,6 +29,10 @@ export default new Router({
             path: '/class1/listen',
             component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Listen.vue'),
         },
+        // {
+        //     path: '/class1/Read',
+        //     component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Read.vue'),
+        // },
         {
             path: '/class2',
             component: () => import( /* webpackChunkName: "class2" */ './pages/class2/Home.vue'),
@@ -41,13 +41,21 @@ export default new Router({
             path: '/class2/listen',
             component: () => import( /* webpackChunkName: "class2" */ './pages/class2/Listen.vue'),
         },
+        // {
+        //     path: '/class2/Read',
+        //     component: () => import( /* webpackChunkName: "class2" */ './pages/class2/Read.vue'),
+        // },
         {
             path: '/class3',
             component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Home.vue'),
         },
+        {
+            path: '/class3/listen',
+            component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Listen.vue'),
+        },
         // {
-        //     path: '/class3/listen',
-        //     component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Listen.vue'),
+        //     path: '/class3/Read',
+        //     component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Read.vue'),
         // },
     ]
 })

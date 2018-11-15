@@ -6,7 +6,7 @@ export default {
         classes: [{
             listen: [],
             // write: [],
-            write: ['D', 'D', 'D', 'd', 'd', 'd'],
+            write: ['G', 'G', 'G', 'g', 'g', 'g'],
             read: [],
         }],
         themeIndex: [1, 2, 3]

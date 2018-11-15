@@ -38,8 +38,7 @@
 </script>
 
 <style lang="less">
-    @paths: 'class2/common', 'class2/def', 'class2/mno', 'class2/uvw', 'classCommon',
-        'classCommon/titles';
+    @paths: 'class2/common', 'classCommon/titles';
     @barHeight: 10vh;
     .class2Listen {
         .page();
@@ -56,7 +55,7 @@
             background-color: rgb(61, 122, 168);
         }
         > .title {
-            .bg-contain('listen_title2', 6);
+            .bg-contain('listen_title2', 2);
             background-color: #fff;
             height: @barHeight;
             width: 60%;

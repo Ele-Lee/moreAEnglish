@@ -105,41 +105,40 @@
             position: relative;
             z-index: 1;
             .bg-contain('animal', 2, 'gif');
-            // .bg-contain('giraffe_body', 2);
             background-position-y: bottom;
-            > .eyes {
-                position: absolute;
-                animation: show 1s infinite alternate;
-                &.on {
-                    bottom: 7.874rem;
-                    left: 2.208rem;
-                    .bg-contain('animation_eyes1--on', 2);
-                    animation-timing-function: step-start;
-                }
-                &.off {
-                    bottom: 7.9rem;
-                    left: 2.087rem;
-                    .bg-contain('animation_eyes1--off', 2);
-                    animation-timing-function: step-end;
-                }
-            }
-            > .hand {
-                position: absolute;
-                z-index: -1;
-                bottom: 5.9rem;
-                &.left {
-                    left: 0.477rem;
-                    .bg-contain('animation_leftHand1', 2);
-                    transform-origin: right bottom;
-                    animation: leftShake 1s infinite alternate linear;
-                }
-                &.right {
-                    left: 3.938rem;
-                    .bg-contain('animation_rightHand1', 2);
-                    transform-origin: left bottom;
-                    animation: rightShake 1s infinite alternate linear;
-                }
-            }
+            // > .eyes {
+            //     position: absolute;
+            //     animation: show 1s infinite alternate;
+            //     &.on {
+            //         bottom: 7.874rem;
+            //         left: 2.208rem;
+            //         .bg-contain('animation_eyes1--on', 2);
+            //         animation-timing-function: step-start;
+            //     }
+            //     &.off {
+            //         bottom: 7.9rem;
+            //         left: 2.087rem;
+            //         .bg-contain('animation_eyes1--off', 2);
+            //         animation-timing-function: step-end;
+            //     }
+            // }
+            // > .hand {
+            //     position: absolute;
+            //     z-index: -1;
+            //     bottom: 5.9rem;
+            //     &.left {
+            //         left: 0.477rem;
+            //         .bg-contain('animation_leftHand1', 2);
+            //         transform-origin: right bottom;
+            //         animation: leftShake 1s infinite alternate linear;
+            //     }
+            //     &.right {
+            //         left: 3.938rem;
+            //         .bg-contain('animation_rightHand1', 2);
+            //         transform-origin: left bottom;
+            //         animation: rightShake 1s infinite alternate linear;
+            //     }
+            // }
             > .letter__wrapper {
                 width: 100%;
                 .flex(center, flex-end);
