@@ -18,12 +18,6 @@
 
 
 <style lang="less">
-    body {
-        -webkit-tap-highlight-color: transparent;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        user-select: none;
-    }
     #app {
         .page();
         font-family: 'Avenir', Helvetica, Arial, sans-serif;

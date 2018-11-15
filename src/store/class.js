@@ -3,14 +3,13 @@ export default {
         AWARD_TITLES: ['勤奋之星', '自信之星', '进取之星'],
         loadCommonClass: [false, false, false],
         startLearnTimeStamp: 0,
-        // CLASS_LENGTH: 35,
         classes: [{
             listen: [],
             // write: [],
-            write: ['A', 'A', 'A', 'a', 'a', 'a'],
+            write: ['D', 'D', 'D', 'd', 'd', 'd'],
             read: [],
         }],
-        // classMusicIndex: 0,
+        themeIndex: [1, 2, 3]
     },
     getters: {
         //学习时间
@@ -39,17 +38,16 @@ export default {
             currentLevelIndex
         }) => (currentLevelIndex % 3 || 0) + 1,
 
-        //class要播放的音乐id
-        // classMusicId: ({
-        //     classMusicIndex
-        // }, getters, rootState, {
-        //     currentLevelKey
-        // }) => currentLevelKey + '-' + classMusicIndex,
-
         //听、写、读class的Key
         listenClassKey: (state) => state.classes[0].listen[0],
         writeClassKey: (state) => state.classes[0].write[0],
         readClassKey: (state) => state.classes[0].read[0],
+
+        //随机主题
+        themeIndex: ({
+            themeIndex,
+            classes
+        }) => themeIndex[classes.length - 1]
     },
     mutations: {
         startLearn(state) {
@@ -70,9 +68,9 @@ export default {
         read(state) {
             state.classes[0].shift()
         },
-        // handleMusicIndex(state, index) {
-        //     state.classMusicIndex = index
-        // },
+        setThemeIndex(state, shuffleArr) {
+            state.themeIndex = shuffleArr
+        }
     },
     actions: {
         loadedCommon({
@@ -83,7 +81,8 @@ export default {
         },
         initClasses({
             commit,
-            rootGetters
+            rootGetters,
+            dispatch
         }) {
             const keys = rootGetters.currentLevelKey
             // console.log(rootGetters)
@@ -97,16 +96,25 @@ export default {
                     read: [upperCase]
                 })
             }
+            dispatch('shuffleThemeIndex')
             commit('startLearn')
-            // commit('handleMusicIndex', 1)
             commit('initClasses', classes)
         },
         finishClass({
             commit,
-            state,
         }, type) {
             type && commit(type)
-            // type !== 'read' && commit('handleMusicIndex', ++state.classMusicIndex)
+        },
+        shuffleThemeIndex({
+            commit,
+            state
+        }) {
+            let arr = state.themeIndex
+            for (let i = 1; i < arr.length; i++) {
+                const random = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[random]] = [arr[random], arr[i]];
+            }
+            commit('setThemeIndex', arr)
         }
     },
 }

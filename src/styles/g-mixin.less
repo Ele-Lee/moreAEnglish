@@ -1,10 +1,37 @@
 
+body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .page() {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+}
+
+.bg-page(@img, @pathIndex: 1, @suffix: 'png') {
+    @path: extract(@paths, @pathIndex);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+    & when (isstring(@img)) {
+        background-image: url('~@/assets/@{path}/@{img}.@{suffix}');
+    }
+}
+
+.bg-img(@img, @pathIndex: 1, @suffix: 'png') {
+    background-image: url('~@/assets/@{path}/@{img}.@{suffix}');
 }
 
 .wh(@w, @h: @w) {

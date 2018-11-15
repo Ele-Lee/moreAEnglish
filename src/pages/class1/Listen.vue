@@ -8,15 +8,11 @@
         <!-- flex -->
         <div class="title" />
         <div class="animal" v-if="currentLevelKey === 'abc'" ref="animal">
-            <div class="eyes on" />
-            <div class="eyes off" />
-            <div class="hand left" />
-            <div class="hand right" />
             <div class="letter__wrapper" :style="letterStyle">
-                <Letter v-for="letter in listenClassKey" :key="letter"
-                    :sprite-id="letter" :class="letter" />
-                <!-- <Letter v-for="letter in 'Aa'" :key="letter" :sprite-id="letter"
-                    :class="letter" /> -->
+                <Letter
+                    v-for="letter in listenClassKey" :key="letter"
+                    :sprite-id="letter" :class="letter"
+                />
             </div>
         </div>
         <Lights @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
@@ -25,75 +21,21 @@
 </template>
 
 <script>
-    const SHOULD_LISTEN_TIME = 3;
-    import { mapGetters, mapActions } from 'vuex';
-    import Letter from '@/components/ui/Letter.vue';
-    import Lights from '@/components/ui/Lights.vue';
-    import NextBtn from '@/components/ui/NextBtn.vue';
+    import listen from '@/mixins/listen.js';
     import BgLetters from '@/components/ui/BgLetters.vue';
     export default {
         name: 'class1Listen',
-        components: { Letter, Lights, NextBtn, BgLetters },
+        components: { BgLetters },
+        mixins: [listen],
         data() {
             return {
-                //听完的次数
-                listenTime: 0,
-                letterStyle: {},
-                showFinger: true,
-                letterAudios: []
+                letterStyle: {}
             };
         },
-        computed: {
-            ...mapGetters(['currentLevelKey', 'listenClassKey']),
-            letterKey() {
-                return this.listenClassKey[0].toLowerCase();
-            },
-            finishListen() {
-                return SHOULD_LISTEN_TIME === this.listenTime;
-            }
-        },
         mounted() {
-            //页面出现次数
-            this._showTime = 0;
-            this._clickAble = true;
-            this._initAutoPlayList();
-            this._initLetterAudios();
             this._positionLetter();
-            this._initListen();
         },
         methods: {
-            ...mapActions(['finishClass']),
-            _initAutoPlayList() {
-                const key = this._getAudioKey;
-                this.autoPlayList = {
-                    a: [false, key(2), false],
-                    b: [false, key(10), false],
-                    c: [false, key(15), false]
-                };
-            },
-            _initLetterAudios() {
-                const key = this._getAudioKey;
-                const l = `letter_${this.letterKey}`;
-                this.letterAudios = {
-                    a: [[key(l), key(l), key(l)], [key(l), key(l), key(3)], [key(l), key(l), key(4)]],
-                    b: [[key(l), key(l), key(l)], [key(l), key(l), key(10)], [key(l), key(l), key(11)]],
-                    c: [[key(l), key(l), key(l)], [key(l), key(l), key(15)], [key(l), key(l), key(16)]]
-                };
-            },
-            _getAudioKey(id) {
-                return this.currentLevelKey + '-' + id;
-            },
-            nextClass() {
-                const overShowTime = [3, 6, 9];
-                if (!this.finishListen) return;
-                this._showTime += 1;
-                this._initListen();
-                if (overShowTime.indexOf(this._showTime) !== -1) {
-                    this.$router.replace('/write');
-                } else {
-                    this.finishClass('listen');
-                }
-            },
             listenLetter({
                 target: {
                     dataset: { index }
@@ -103,7 +45,6 @@
                     const letterAudio = this.letterAudios[this.letterKey][this._showTime][
                         this.listenTime
                     ];
-                    this.showFinger = false;
                     this._clickAble = false;
                     this.listenTime += 1;
                     this.$audio.play(letterAudio).then(() => {
@@ -113,16 +54,6 @@
                         }
                     });
                 }
-            },
-            _initListen() {
-                const autoAudio = this.autoPlayList[this.letterKey][this._showTime];
-                if (autoAudio) {
-                    this._clickAble = false;
-                    this.$audio.play(autoAudio).then(() => {
-                        this._clickAble = true;
-                    });
-                }
-                this.listenTime = 0;
             },
             _positionLetter() {
                 const { width, height } = this.$refs.animal.getBoundingClientRect();
@@ -150,41 +81,6 @@
                 fill: rgb(214, 250, 253);
             }
         }
-        // > .Letter {
-        //     position: absolute;
-        //     fill: rgb(214, 250, 253);
-        //     width: 0.8rem;
-        //     &.l-1 {
-        //         top: 12.379rem;
-        //         left: 0.968rem;
-        //         transform: rotate(-30deg);
-        //     }
-        //     &.l-2 {
-        //         top: 7.318rem;
-        //         left: 1.993rem;
-        //         transform: rotate(-15deg);
-        //     }
-        //     &.u-1 {
-        //         top: 5.526rem;
-        //         left: 0.846rem;
-        //         transform: rotate(35deg);
-        //     }
-        //     &.u-2 {
-        //         top: 9.714rem;
-        //         left: 0.766rem;
-        //         transform: rotate(40deg);
-        //     }
-        //     &.u-3 {
-        //         top: 10.422rem;
-        //         left: 8.531rem;
-        //         transform: rotate(45deg);
-        //     }
-        //     &.u-4 {
-        //         top: 5.731rem;
-        //         left: 8.339rem;
-        //         transform: rotate(45deg);
-        //     }
-        // }
         > .top__mask {
             z-index: 1;
             .p-top();
@@ -208,8 +104,8 @@
             flex: 1;
             position: relative;
             z-index: 1;
-            // .bg-contain('test', 2, 'gif');
-            .bg-contain('giraffe_body', 2);
+            .bg-contain('animal', 2, 'gif');
+            // .bg-contain('giraffe_body', 2);
             background-position-y: bottom;
             > .eyes {
                 position: absolute;
@@ -263,7 +159,7 @@
                 }
             }
         }
-        > .Light {
+        > .Lights {
             .light {
                 &.on {
                     .bg-contain('btn_light--on');

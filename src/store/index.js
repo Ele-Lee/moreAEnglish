@@ -18,17 +18,19 @@ export default new Vuex.Store({
             'uvw',
             'xyz'
         ],
+        //通过的关卡数
+        //进入的关卡index
         //class 1
-        hadPassedLevels: 0,
-        currentLevelIndex: 0,
+        // hadPassedLevels: 0,
+        // currentLevelIndex: 0,
+
         //class 2
         // hadPassedLevels: 2,
         // currentLevelIndex: 1,
+
         //class 3
-        //通过的关卡数
-        // hadPassedLevels: 9,
-        //进入的关卡index
-        // currentLevelIndex: 2,
+        hadPassedLevels: 9,
+        currentLevelIndex: 2,
     },
     getters: {
         // levels: state => state.levels,

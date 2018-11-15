@@ -47,3 +47,40 @@
         transform: translate(-0.1rem, -0.1rem);
     }
 }
+
+@keyframes toLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(130vw);
+    }
+}
+@keyframes toRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-130vw);
+    }
+}
+
+@keyframes move {
+    50% {
+        transform: translateX(-0.2rem);
+    }
+    0%,
+    100% {
+        transform: translateX(0.2rem);
+    }
+}
+
+@keyframes rotateMove {
+    0%,
+    100% {
+        transform: translateX(0.15rem) rotate(0deg) scale(0.6);
+    }
+    50% {
+        transform: translateX(-0.15rem) rotate(360deg) scale(0.6);
+    }
+}

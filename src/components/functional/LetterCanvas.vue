@@ -5,11 +5,12 @@
         @touchmove.stop.prevent="smearMove"
         @touchstart.stop.prevent="smearStart"
     >
-        <Letter
+        <!-- <Letter
             :sprite-id="letterKey"
             :resetSvgSize="true"
             @inited="initialSize"
-        />
+        /> -->
+        <Letter :src="require(`@/assets/${strokesUrl}0.png`)" @inited="initialSize"/>
         <canvas
             ref="canvas"
             v-show="strokeIndex > currentCtxIndex"
@@ -40,8 +41,8 @@
             },
             //字母起落点的xy的百分比 (固定大小可用px)
             letterPoints: {
-                type: Array
-                // default: () => [45, 8, 10, 92, 57, 8, 87, 91, 35, 55, 63, 55]
+                type: Array,
+                default: () => [45, 8, 10, 92, 57, 8, 87, 91, 35, 55, 63, 55]
                 // default: () => [161, 45, 43, 376, 203, 44, 323, 374, 125, 223, 230, 226]
             },
             //笔画的基本路径
@@ -50,10 +51,10 @@
                 default: 'class1/abc/strokes/letter-A'
             },
             //笔触大小
-            strokeRadius: {
-                type: Number,
-                default: 40
-            },
+            // strokeRadius: {
+            //     type: Number,
+            //     default: 40
+            // },
             //字母
             letterKey: {
                 type: String,
@@ -61,7 +62,7 @@
             }
         },
         created() {
-            console.log('created', this.letterPoints);
+            // console.log('created', this.letterPoints);
             const strokes = this.letterPoints.length / STROKE_DATA_GAP;
             this.ctxs = []; //每笔相应的canvas.context
             this.canvasSizeData = {}; //canvas的尺寸数据
@@ -95,19 +96,23 @@
             });
         },
         methods: {
-            _initFullStrokesStyle() {
+            _initStyle() {
                 const strokesUrl = this.strokesUrl + (this.strokesSum === 1 ? '1' : '');
                 this.fullStrokesStyle = {
                     backgroundImage: `url(${require(`@/assets/${strokesUrl}.png`)})`,
                     width: this.width + 'px',
                     height: this.height + 'px'
                 };
+                // console.log(this.$refs.canvasWrapper.style);
+                this.$refs.canvasWrapper.style.width = this.width + 'px';
+                this.$refs.canvasWrapper.style.height = this.height + 'px';
             },
             //初始化canvas大小
             initialSize({ width, height }) {
+                // console.log(width);
                 this.width = width;
                 this.height = height;
-                this._initFullStrokesStyle();
+                this._initStyle();
             },
             //初始化笔画的context
             _initCanvas() {
@@ -122,6 +127,9 @@
                     });
                     const canvasSizeData = canvas.getBoundingClientRect();
                     this.canvasSizeData = canvasSizeData;
+                    //笔触
+                    this.strokeRadius = canvasSizeData.width / 5;
+                    // console.log(this.strokeRadius);
                     this.canvasArea = [0, 0, canvasSizeData.width, canvasSizeData.height];
                     resolve();
                 });
@@ -134,7 +142,7 @@
                     for (let i = 1; i <= strokesSum; i++) {
                         const img = new Image();
                         img.onload = () => {
-                            this.strokeImgs.push(img);
+                            this.strokeImgs[i - 1] = img;
                             ++loadedImg == strokesSum && resolve();
                         };
                         img.src = require(`@/assets/${this.strokesUrl}${i}.png`);
@@ -219,7 +227,12 @@
                 const correctFactorY = ~~Math.abs(
                     ((clientY - top) * 100) / height - this.letterPoints[index + startIndex + 1]
                 );
-                // console.log('correctFactorX', correctFactorX, 'correctFactorY', correctFactorY);
+                console.log(
+                    'correctFactorX',
+                    ~~(((clientX - left) * 100) / width),
+                    'correctFactorY',
+                    ~~(((clientY - top) * 100) / height)
+                );
                 //判断起点或落点是否在预设区域内
                 if (
                     correctFactorX >= this.correctPointRange ||
@@ -263,12 +276,16 @@
     @paths: '', 'class1/common', 'classCommon/titles', 'class1/abc/strokes/';
     .LetterCanvas {
         position: relative;
-        .flex();
+        .flex(center, flex-start);
         flex: 1;
         > .canvas,
         > .strokes--full {
             display: block;
-            .p-center();
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            // .p-center(25%);
             .contain();
         }
     }

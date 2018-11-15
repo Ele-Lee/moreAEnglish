@@ -4,13 +4,14 @@
         <BgLetters :letterKey="writeClassKey" :class="'class'+currentClassType" />
         <div class="top__mask" />
         <div class="title" />
-        <div class="baseLine" v-show="showBaseLine"/>
-        <!-- canvas -->
-        <LetterCanvas
-            @draw="playAudio" v-bind="LetterCanvasBinds" :key="finishTime"
-            :class="['class'+currentClassType, showBaseLine && 'showBaseLine', writeClassKey]"
-        />
-        <NextBtn :isFinish="finishWrite" @click.native="nextClass"/>
+        <div class="drawLetter">
+            <div class="baseLine" :style="{opacity: showBaseLine ? 1: 0}"/>
+            <LetterCanvas
+                @draw="playAudio" v-bind="LetterCanvasBinds" :key="finishTime"
+                :class="['class'+currentClassType, writeClassKey, showBaseLine ? 'showBaseLine' : '']"
+            />
+        </div>
+        <NextBtn :class="'class'+currentClassType" :isFinish="finishWrite" @click.native="nextClass"/>
     </div>
 </template>
 
@@ -56,7 +57,6 @@
             return {
                 finishTime: 0,
                 finishWrite: false
-                // LetterCanvasBinds: {}
             };
         },
         created() {
@@ -65,7 +65,7 @@
                     letterPoints: [45, 8, 10, 92, 57, 8, 87, 91, 35, 55, 63, 55]
                 },
                 a: {
-                    letterPoints: [45, 8, 10, 92]
+                    letterPoints: [68, 20, 88, 89]
                 }
             };
         },
@@ -126,8 +126,13 @@
                 if (this.finishWrite) {
                     this.finishClass('write');
                     this.finishTime++;
-                    this._playBgm();
-                    this.finishWrite = false;
+                    if (this.finishTime === 6) {
+                        console.log('todo swich to read');
+                        // this.$router.repalce(`/class${this.currentClassType}/read`)
+                    } else {
+                        this._playBgm();
+                        this.finishWrite = false;
+                    }
                 }
             }
         }
@@ -135,45 +140,33 @@
 </script>
 
 <style lang="less">
-    @paths: '', 'class1/common', 'classCommon/titles';
-    .Strokes(@v) {
-        padding-bottom: @v;
-        // .strokes {
-        //     top: @v
-        // }
-    }
-
+    @paths: 'classCommon/titles', 'class1/common', 'class2/common', 'class3/common';
     .Write {
         .page();
         .flex-c(space-between);
-        > .LetterCanvas {
-            > .Letter {
-                height: 100%;
-                width: 80%;
+        > .drawLetter {
+            position: relative;
+            > .baseLine {
+                .bg-contain('bg_baseLine', 2);
             }
-            &.showBaseLine {
-                // padding-bottom: 9%;
-                > .Letter {
-                    height: 100%;
-                    width: 70%;
+            > .LetterCanvas {
+                .p-center();
+                .wh(100%);
+                &.showBaseLine {
+                    top: 0%;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    &.A {
+                        width: 65%;
+                        height: 66%;
+                    }
+                    &.a {
+                        top: 30%;
+                        width: 38%;
+                        height: 38%;
+                    }
                 }
             }
-            &.showBaseLine > .Letter {
-            }
-            &.class1 > .Letter {
-                fill: rgb(243, 155, 46);
-            }
-            &.class2 > .Letter {
-                fill: rgb(102, 141, 252);
-            }
-            &.class3 > .Letter {
-                fill: rgb(255, 104, 105);
-            }
-        }
-        > .baseLine {
-            .p-center(57%);
-            .bg-contain('bg_baseLine', 2);
-            width: 70%;
         }
         > .BgLetters {
             &.class1 {
@@ -200,17 +193,34 @@
             .bg-cover('bg_header', 2);
         }
         > .title {
-            flex: 0.3;
+            margin-top: 5vh;
             z-index: 1;
-            .bg-contain('write_title', 3);
-            background-position: bottom;
+            .bg-contain('write_title');
         }
         > .NextBtn {
-            > .off {
-                .bg-contain('btn_next--off', 2);
+            &.class1 {
+                > .off {
+                    .bg-contain('btn_next--off', 2);
+                }
+                > .on {
+                    .bg-contain('btn_next--on', 2);
+                }
             }
-            > .on {
-                .bg-contain('btn_next--on', 2);
+            &.class2 {
+                > .off {
+                    .bg-contain('btn_next--off', 3);
+                }
+                > .on {
+                    .bg-contain('btn_next--on', 3);
+                }
+            }
+            &.class3 {
+                > .off {
+                    .bg-contain('btn_next--off', 4);
+                }
+                > .on {
+                    .bg-contain('btn_next--on', 4);
+                }
             }
         }
     }

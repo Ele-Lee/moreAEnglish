@@ -22,6 +22,10 @@ export default new Router({
         //   component: Write
         // },
         {
+            path: '/write',
+            component: () => import('./pages/common/Write.vue'),
+        },
+        {
             path: '/class1',
             component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Home.vue'),
         },
@@ -30,29 +34,21 @@ export default new Router({
             component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Listen.vue'),
         },
         {
-            path: '/write',
-            component: () => import( /* webpackChunkName: "class1" */ './pages/common/Write.vue'),
-        },
-        {
             path: '/class2',
             component: () => import( /* webpackChunkName: "class2" */ './pages/class2/Home.vue'),
-            children: [
-                // {
-                //   path: 'posts',
-                //   component: UserPosts
-                // }
-            ]
+        },
+        {
+            path: '/class2/listen',
+            component: () => import( /* webpackChunkName: "class2" */ './pages/class2/Listen.vue'),
         },
         {
             path: '/class3',
             component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Home.vue'),
-            children: [
-                // {
-                //   path: 'posts',
-                //   component: UserPosts
-                // }
-            ]
         },
+        // {
+        //     path: '/class3/listen',
+        //     component: () => import( /* webpackChunkName: "class3" */ './pages/class3/Listen.vue'),
+        // },
     ]
 })
 

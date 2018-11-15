@@ -1,6 +1,8 @@
 <template>
-    <svg class="Letter" :style="svgStyle">
-        <use :xlink:href="getSpriteId()" ref="letter" />
+    <!-- <img v-if="src" class="Letter" :src="src" :alt="src" ref="letter"/> -->
+    <div v-if="src" class="Letter img" :style="{backgroundImage: `url(${src})`}" ref="letter"/>
+    <svg v-else class="Letter" :style="svgStyle">
+        <use class="use" :xlink:href="getSpriteId()" ref="letter" />
     </svg>
 </template>
 
@@ -9,6 +11,7 @@
     export default {
         name: 'Letter',
         props: {
+            src: String,
             spriteId: String,
             resetSvgSize: {
                 type: Boolean,
@@ -21,7 +24,7 @@
             };
         },
         mounted() {
-            if (this.resetSvgSize) {
+            if (this.resetSvgSize || this.src) {
                 const { width, height } = this.$refs.letter.getBoundingClientRect();
                 this.svgStyle = {
                     width: width + 'px',
@@ -41,7 +44,11 @@
 
 <style lang="less">
     .Letter {
-        width: unset;
-        height: unset;
+        width: 100%;
+        height: 100%;
+    }
+    .img {
+        .contain();
+        // width: fit-content;
     }
 </style>

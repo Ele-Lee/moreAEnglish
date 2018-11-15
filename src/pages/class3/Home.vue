@@ -29,23 +29,13 @@
 <style lang="less">
     @paths: 'class3/common/loading', 'class3/common';
     .Class3Home {
-        .page();
+        .bg-page('bg_loading');
         .flex-c(space-around);
-        .bg-cover('bg_loading');
-        height: 100vh;
         > .bottom__family {
-            // .p-center(81%);
             .bg-cover('bg_family');
-            // @media @ipad {
-            //     top: 78%;
-            // }
         }
         > .title {
-            // .p-center(3.2rem);
             .bg-cover('start_title');
-            // @media @ipad {
-            //     top: 10%;
-            // }
         }
         > .Loading {
             .p-center(40%);
@@ -58,7 +48,6 @@
             }
         }
         > .StartTitle {
-            // .p-center(48%);
             @media @ipad {
                 top: 40%;
             }

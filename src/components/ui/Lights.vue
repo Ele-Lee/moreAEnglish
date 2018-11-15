@@ -1,5 +1,5 @@
 <template>
-    <div class="Light">
+    <div class="Lights">
         <div class="lights off">
             <div class="light off" v-for="light in 3" :key="light+'off'" />
         </div>
@@ -37,7 +37,7 @@
 
 <style lang="less">
     @paths: 'classCommon';
-    .Light {
+    .Lights {
         position: relative;
         z-index: 1;
         > .lights {

@@ -33,7 +33,10 @@
             this.$assets = [
                 require.context('@/assets/home/', true),
                 require.context('@/assets/review/', true),
-                require.context('@/assets/classCommon', true)
+                require.context('@/assets/classCommon', true),
+                require.context('@/assets/class1/common/loading'),
+                require.context('@/assets/class2/common/loading'),
+                require.context('@/assets/class3/common/loading')
             ];
         },
         computed: {
