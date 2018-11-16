@@ -29,14 +29,14 @@
 </script>
 
 <style lang="less">
-    @paths: 'class1/common/loading', 'class1/common';
+    @paths: 'class1/common/loading', 'class1/common', 'classCommon';
     .Class1Home {
         .page();
         .flex-c(start);
         background: linear-gradient(to bottom, #a9f2f9, #cafdff);
         > .top__mask {
             .p-top();
-            .bg-cover('bg_header', 2);
+            .bg-cover('bg_header', 3);
             z-index: -1;
         }
         > .bottom {

@@ -22,6 +22,10 @@ export default new Router({
             component: () => import('./pages/common/Write.vue'),
         },
         {
+            path: '/Read',
+            component: () => import('./pages/common/Read.vue'),
+        },
+        {
             path: '/class1',
             component: () => import( /* webpackChunkName: "class1" */ './pages/class1/Home.vue'),
         },

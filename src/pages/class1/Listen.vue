@@ -1,7 +1,7 @@
 <template>
     <div class="class1Listen">
         <!-- 背景 -->
-        <BgLetters :letterKey="letterKey" />
+        <BgLetters :letterKey="letterKey" :type="1"/>
         <div class="top__mask" />
         <div class="bottom__cloud" />
         <div class="grass" />
@@ -15,8 +15,8 @@
                 />
             </div>
         </div>
-        <Lights @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
-        <NextBtn @click.native="nextClass" :isFinish="finishListen" />
+        <Lights :type="1" @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
+        <NextBtn :type="1" @click.native="nextClass" :isFinish="finishListen" />
     </div>
 </template>
 
@@ -36,25 +36,6 @@
             this._positionLetter();
         },
         methods: {
-            listenLetter({
-                target: {
-                    dataset: { index }
-                }
-            }) {
-                if (index - 1 === this.listenTime && this._clickAble) {
-                    const letterAudio = this.letterAudios[this.letterKey][this._showTime][
-                        this.listenTime
-                    ];
-                    this._clickAble = false;
-                    this.listenTime += 1;
-                    this.$audio.play(letterAudio).then(() => {
-                        this._clickAble = true;
-                        if (this.finishListen) {
-                            this.$audio.play(`finish`);
-                        }
-                    });
-                }
-            },
             _positionLetter() {
                 const { width, height } = this.$refs.animal.getBoundingClientRect();
                 const scaleH = (height * 2) / 714;
@@ -84,7 +65,7 @@
         > .top__mask {
             z-index: 1;
             .p-top();
-            .bg-cover('bg_header');
+            .bg-cover('bg_header', 5);
         }
         > .bottom__cloud {
             .p-bottom(2.5rem);
@@ -106,39 +87,6 @@
             z-index: 1;
             .bg-contain('animal', 2, 'gif');
             background-position-y: bottom;
-            // > .eyes {
-            //     position: absolute;
-            //     animation: show 1s infinite alternate;
-            //     &.on {
-            //         bottom: 7.874rem;
-            //         left: 2.208rem;
-            //         .bg-contain('animation_eyes1--on', 2);
-            //         animation-timing-function: step-start;
-            //     }
-            //     &.off {
-            //         bottom: 7.9rem;
-            //         left: 2.087rem;
-            //         .bg-contain('animation_eyes1--off', 2);
-            //         animation-timing-function: step-end;
-            //     }
-            // }
-            // > .hand {
-            //     position: absolute;
-            //     z-index: -1;
-            //     bottom: 5.9rem;
-            //     &.left {
-            //         left: 0.477rem;
-            //         .bg-contain('animation_leftHand1', 2);
-            //         transform-origin: right bottom;
-            //         animation: leftShake 1s infinite alternate linear;
-            //     }
-            //     &.right {
-            //         left: 3.938rem;
-            //         .bg-contain('animation_rightHand1', 2);
-            //         transform-origin: left bottom;
-            //         animation: rightShake 1s infinite alternate linear;
-            //     }
-            // }
             > .letter__wrapper {
                 width: 100%;
                 .flex(center, flex-end);
@@ -158,23 +106,23 @@
                 }
             }
         }
-        > .Lights {
-            .light {
-                &.on {
-                    .bg-contain('btn_light--on');
-                }
-                &.off {
-                    .bg-contain('btn_light--off');
-                }
-            }
-        }
-        > .NextBtn {
-            > .off {
-                .bg-contain('btn_next--off');
-            }
-            > .on {
-                .bg-contain('btn_next--on');
-            }
-        }
+        // > .Lights {
+        //     .light {
+        //         &.on {
+        //             .bg-contain('btn_light--on');
+        //         }
+        //         &.off {
+        //             .bg-contain('btn_light--off');
+        //         }
+        //     }
+        // }
+        // > .NextBtn {
+        //     > .off {
+        //         .bg-contain('btn_next--off');
+        //     }
+        //     > .on {
+        //         .bg-contain('btn_next--on');
+        //     }
+        // }
     }
 </style>

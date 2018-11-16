@@ -1,22 +1,23 @@
 <template>
     <div class="Write">
         <!-- bg -->
-        <BgLetters :letterKey="writeClassKey" :class="'class'+currentClassType" />
+        <BgLetters :letterKey="writeClassKey" :type="currentClassType"/>
         <div class="top__mask" />
         <div class="title" />
         <div class="drawLetter">
             <div class="baseLine" :style="{opacity: showBaseLine ? 1: 0}"/>
             <LetterCanvas
                 @draw="playAudio" v-bind="LetterCanvasBinds" :key="finishTime"
-                :class="['class'+currentClassType, writeClassKey, showBaseLine ? 'showBaseLine' : '']"
+                :class="[writeClassKey, showBaseLine ? 'showBaseLine' : '']"
             />
+                <!-- :class="['class'+currentClassType, writeClassKey, showBaseLine ? 'showBaseLine' : '']" -->
         </div>
-        <NextBtn :class="'class'+currentClassType" :isFinish="finishWrite" @click.native="nextClass"/>
+        <NextBtn :type="currentClassType" :isFinish="finishWrite" @click.native="nextClass"/>
     </div>
 </template>
 
 <script>
-    const a = {
+    const props = {
         //擦去比例正确率
         correctSmearRatio: {
             type: Number,
@@ -32,12 +33,12 @@
             type: Array,
             // default: () => [161, 45, 43, 376, 203, 44, 323, 374, 125, 223, 230, 226]
             default: () => [45, 8, 10, 92, 57, 8, 87, 91, 35, 55, 63, 55]
-        },
-        //笔触大小
-        strokeRadius: {
-            type: Number,
-            default: 30
         }
+        // //笔触大小
+        // strokeRadius: {
+        //     type: Number,
+        //     default: 30
+        // }
     };
     import { mapGetters, mapActions } from 'vuex';
     import { getLetterName } from '@/utils/functions.js';
@@ -127,8 +128,7 @@
                     this.finishClass('write');
                     this.finishTime++;
                     if (this.finishTime === 6) {
-                        console.log('todo swich to read');
-                        // this.$router.repalce(`/class${this.currentClassType}/read`)
+                        this.$router.repalce(`/read`);
                     } else {
                         this._playBgm();
                         this.finishWrite = false;
@@ -140,7 +140,7 @@
 </script>
 
 <style lang="less">
-    @paths: 'classCommon/titles', 'class1/common', 'class2/common', 'class3/common';
+    @paths: 'classCommon/titles', 'class1/common', 'class2/common', 'class3/common', 'classCommon';
     .Write {
         .page();
         .flex-c(space-between);
@@ -168,60 +168,14 @@
                 }
             }
         }
-        > .BgLetters {
-            &.class1 {
-                background-color: rgb(255, 242, 195);
-                .Letter {
-                    fill: rgb(254, 235, 181);
-                }
-            }
-            &.class2 {
-                background-color: rgb(184, 230, 254);
-                .Letter {
-                    fill: rgb(165, 220, 254);
-                }
-            }
-            &.class3 {
-                background-color: rgb(255, 233, 244);
-                .Letter {
-                    fill: rgb(255, 225, 236);
-                }
-            }
-        }
         > .top__mask {
             .p-top();
-            .bg-cover('bg_header', 2);
+            .bg-cover('bg_header', 5);
         }
         > .title {
             margin-top: 5vh;
             z-index: 1;
             .bg-contain('write_title');
-        }
-        > .NextBtn {
-            &.class1 {
-                > .off {
-                    .bg-contain('btn_next--off', 2);
-                }
-                > .on {
-                    .bg-contain('btn_next--on', 2);
-                }
-            }
-            &.class2 {
-                > .off {
-                    .bg-contain('btn_next--off', 3);
-                }
-                > .on {
-                    .bg-contain('btn_next--on', 3);
-                }
-            }
-            &.class3 {
-                > .off {
-                    .bg-contain('btn_next--off', 4);
-                }
-                > .on {
-                    .bg-contain('btn_next--on', 4);
-                }
-            }
         }
     }
 </style>

@@ -23,6 +23,7 @@
 }
 
 .bg-img(@img, @pathIndex: 1, @suffix: 'png') {
+    @path: extract(@paths, @pathIndex);
     background-image: url('~@/assets/@{path}/@{img}.@{suffix}');
 }
 

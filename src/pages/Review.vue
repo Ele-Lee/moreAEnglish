@@ -139,7 +139,6 @@
             }
         }
         > .showBox {
-            // .flex-c();
             .bg-cover('bg_showBox');
             position: relative;
             margin-bottom: -0.5rem;

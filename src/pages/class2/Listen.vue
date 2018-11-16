@@ -13,9 +13,9 @@
                 class="bg_animations" :class="bgAnimations[themeIndex].prefix+index"
             />
         </div>
-        <Lights @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
+        <Lights :type="4" @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
         <div class="btn__wrapper">
-            <NextBtn @click.native="nextClass" :isFinish="finishListen" />
+            <NextBtn :type="2" @click.native="nextClass" :isFinish="finishListen" />
         </div>
     </div>
 </template>

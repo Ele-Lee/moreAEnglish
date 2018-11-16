@@ -14,8 +14,8 @@
 
             </div>
         </div>
-        <Lights @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
-        <NextBtn @click.native="nextClass" :isFinish="finishListen" />
+        <Lights :type="3" @touchstart.stop.native="listenLetter" :listenTime="listenTime" />
+        <NextBtn :type="3" @click.native="nextClass" :isFinish="finishListen" />
     </div>
 </template>
 
@@ -151,13 +151,13 @@
                 left: 1.55rem;
             }
         }
-        > .NextBtn {
-            > .off {
-                .bg-contain('btn_next--off');
-            }
-            > .on {
-                .bg-contain('btn_next--on');
-            }
-        }
+        // > .NextBtn {
+        //     > .off {
+        //         .bg-contain('btn_next--off');
+        //     }
+        //     > .on {
+        //         .bg-contain('btn_next--on');
+        //     }
+        // }
     }
 </style>

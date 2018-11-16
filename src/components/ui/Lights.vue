@@ -1,5 +1,5 @@
 <template>
-    <div class="Lights">
+    <div class="Lights" :class="'type_'+type">
         <div class="lights off">
             <div class="light off" v-for="light in 3" :key="light+'off'" />
         </div>
@@ -7,7 +7,7 @@
             <div class="light on" v-for="light in 3" :key="light+'on'"
                 :data-index="light" :style="{opacity: listenTime > light-1 ? 1: 0}" />
         </div>
-        <div class="guidedFinger" :data-index="1" :style="{display: showGuidedFinger ? 'block':'none'}" />
+        <div class="guidedFinger" :data-index="1" :style="{display: (showGuidedFinger && listenTime>0) ? 'block':'none'}" />
     </div>
 </template>
 
@@ -20,23 +20,28 @@
             listenTime: {
                 type: Number,
                 default: 0
-            }
-        },
-        data() {
-            return {
-                showGuidedFinger: true
-            };
-        },
-        watch: {
-            listenTime() {
-                this.showGuidedFinger = false;
+            },
+            type: Number,
+            showGuidedFinger: {
+                type: Boolean,
+                default: true
             }
         }
+        // data() {
+        //     return {
+        //         showGuidedFinger: true
+        //     };
+        // },
+        // watch: {
+        //     listenTime() {
+        //         this.showGuidedFinger = false;
+        //     }
+        // }
     };
 </script>
 
 <style lang="less">
-    @paths: 'classCommon';
+    @paths: 'classCommon', 'class1/common', 'class2/common', 'class3/common';
     .Lights {
         position: relative;
         z-index: 1;
@@ -62,6 +67,46 @@
             height: 1.4rem;
             transition: opacity 1s;
             animation: click 1s infinite alternate-reverse;
+        }
+        &.type_1 {
+            .light {
+                &.on {
+                    .bg-cover('btn_light--on', 2);
+                }
+                &.off {
+                    .bg-cover('btn_light--off', 2);
+                }
+            }
+        }
+        &.type_2 {
+            .light {
+                &.on {
+                    .bg-cover('btn_light2--on', 3);
+                }
+                &.off {
+                    .bg-cover('btn_light2--off', 3);
+                }
+            }
+        }
+        &.type_3 {
+            .light {
+                &.on {
+                    .bg-cover('btn_light--on', 4);
+                }
+                &.off {
+                    .bg-cover('btn_light--off', 4);
+                }
+            }
+        }
+        &.type_4 {
+            .light {
+                &.on {
+                    .bg-cover('btn_light1--on', 3);
+                }
+                &.off {
+                    .bg-cover('btn_light1--off', 3);
+                }
+            }
         }
     }
 </style>

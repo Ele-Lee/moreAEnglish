@@ -1,5 +1,5 @@
 <template>
-    <div class="BgLetters">
+    <div class="BgLetters" :class="'type_'+type">
         <div class="cloums" v-for="cloums in 5" :key="cloums">
             <Letter v-for="letter in 6" :key="letter" :sprite-id="cloums%2 ===0 ? letterKey.toLowerCase() : letterKey.toUpperCase()"
                 :style="{transform: `rotate(${getRandomRotate()}deg)`}" />
@@ -15,7 +15,8 @@
             Letter
         },
         props: {
-            letterKey: String
+            letterKey: String,
+            type: Number
         },
         methods: {
             getRandomRotate(n = 0, m = 360) {
@@ -40,6 +41,24 @@
             > .Letter {
                 .wh(1rem);
                 transform-origin: center;
+            }
+        }
+        &.type_1 {
+            background-color: rgb(255, 242, 195);
+            .Letter {
+                fill: rgb(254, 235, 181);
+            }
+        }
+        &.type_2 {
+            background-color: rgb(184, 230, 254);
+            .Letter {
+                fill: rgb(165, 220, 254);
+            }
+        }
+        &.type_3 {
+            background-color: rgb(255, 233, 244);
+            .Letter {
+                fill: rgb(255, 225, 236);
             }
         }
     }

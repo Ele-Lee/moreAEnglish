@@ -7,9 +7,9 @@ export default {
             listen: [],
             // write: [],
             write: ['G', 'G', 'G', 'g', 'g', 'g'],
-            read: [],
+            read: ['b'],
         }],
-        themeIndex: [1, 2, 3]
+        themeIndex: [0, 1, 2]
     },
     getters: {
         //学习时间
@@ -93,7 +93,7 @@ export default {
                 classes.push({
                     listen: [upperCase + lowerCase, upperCase, lowerCase],
                     write: [upperCase, upperCase, upperCase, lowerCase, lowerCase, lowerCase],
-                    read: [upperCase]
+                    read: [lowerCase]
                 })
             }
             dispatch('shuffleThemeIndex')

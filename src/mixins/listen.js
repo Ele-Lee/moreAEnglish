@@ -31,8 +31,7 @@ export default {
     computed: {
         ...mapGetters(['currentLevelKey', 'listenClassKey', 'themeIndex']),
         letterKey() {
-            // return this.listenClassKey[0].toLowerCase();
-            return 'g'
+            return this.listenClassKey[0].toLowerCase();
         },
         finishListen() {
             return SHOULD_LISTEN_TIME === this.listenTime;
@@ -98,6 +97,7 @@ export default {
             }
         },
         //点击按钮，播放音乐
+        //opt
         listenLetter({
             target: {
                 dataset: {
@@ -109,13 +109,12 @@ export default {
                 const letterAudio = this.letterAudios[this.letterKey][this._showTime][
                     this.listenTime
                 ];
-                this._clickAble = false;
                 this.listenTime += 1;
+                this._clickAble = false;
+                //opt
                 this.$audio.play(letterAudio).then(() => {
                     this._clickAble = true;
-                    if (this.finishListen) {
-                        this.$audio.play(`finish`);
-                    }
+                    this.finishListen && this.$audio.play(`finish`);
                 });
             }
         },
@@ -123,6 +122,7 @@ export default {
             const autoAudio = this.autoPlayList[this.letterKey][this._showTime];
             if (autoAudio) {
                 this._clickAble = false;
+                //opt
                 this.$audio.play(autoAudio).then(() => {
                     this._clickAble = true;
                 });
