@@ -6,7 +6,7 @@
             <div class="child on"/>
             <div class="baseLine">
                 <div class="letter__wrapper">
-                    <!-- 因为有两个y所以需要区分，搞得代码真的丑，贼丑 -->
+                    <!-- 因为有两个y所以要区分，然后就搞得代码真的丑，贼丑，污染眼睛 -->
                     <Letter
                         v-for="letter in listenClassKey" :key="letter"
                         :sprite-id="letter === 'y' ? 'y2' : letter" :class="letter" :resetSvgSize='true'
