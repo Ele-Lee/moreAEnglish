@@ -6,9 +6,10 @@
             <div class="child on"/>
             <div class="baseLine">
                 <div class="letter__wrapper">
+                    <!-- 因为有两个y所以需要区分，搞得代码真的丑，贼丑 -->
                     <Letter
-                        v-for="letter in 'P'" :key="letter"
-                        :sprite-id="letter" :class="letter" :resetSvgSize='true'
+                        v-for="letter in listenClassKey" :key="letter"
+                        :sprite-id="letter === 'y' ? 'y2' : letter" :class="letter" :resetSvgSize='true'
                     />
                 </div>
 
@@ -23,10 +24,7 @@
     import listen from '@/mixins/listen.js';
     export default {
         name: 'class3Listen',
-        mixins: [listen],
-        data() {
-            return {};
-        }
+        mixins: [listen]
     };
 </script>
 
@@ -119,19 +117,86 @@
                 > .letter__wrapper {
                     position: absolute;
                     top: -14.5%;
-                    height: 100%;
+                    .wh(100%);
                     .flex();
                     > .Letter {
                         fill: rgb(255, 207, 72);
+                        margin: 0 0.2rem;
                         @media @ipad {
                             transform: scale(1.1);
                         }
+                        @gapH: 8%;
+                        @lineH: 6%;
+                        @baseH: @gapH*2+ @lineH*3;
+                        @smallH: @gapH+ @lineH*2;
+                        @lowBaseTop: 31%;
+                        @lowerBaseTop: 16%;
+                        &.G {
+                            height: @baseH;
+                        }
+                        &.g {
+                            margin-top: @lowBaseTop;
+                            height: @baseH;
+                        }
+
+                        &.H {
+                            height: @baseH;
+                        }
+                        &.h {
+                            height: @baseH;
+                        }
+                        &.I {
+                            height: @baseH;
+                        }
+                        &.i {
+                            margin-top: 9%;
+                            height: 26%;
+                        }
                         &.P {
-                            height: 34%;
+                            margin: 0;
+                            height: @baseH;
                         }
                         &.p {
-                            padding-top: 69%;
-                            height: 34%;
+                            margin: @lowBaseTop 0 0 0;
+                            height: @baseH;
+                        }
+                        &.Q {
+                            margin: 0 0.1rem;
+                            height: @baseH;
+                        }
+                        &.q {
+                            margin: @lowBaseTop 0.1rem 0;
+                            height: @baseH;
+                        }
+                        &.R {
+                            height: @baseH;
+                        }
+                        &.r {
+                            margin-top: @lowerBaseTop;
+                            height: @smallH;
+                        }
+                        &.X {
+                            margin: 0 0.1rem;
+                            height: @baseH;
+                        }
+                        &.x {
+                            margin: @lowerBaseTop 0.1rem 0;
+                            height: @smallH;
+                        }
+                        &.Y {
+                            margin: 0;
+                            height: @baseH;
+                        }
+                        &.y {
+                            margin: @lowBaseTop 0 0;
+                            height: @baseH;
+                        }
+                        &.Z {
+                            height: @baseH;
+                        }
+                        &.z {
+                            margin-top: @lowerBaseTop;
+                            height: @smallH;
                         }
                     }
                 }
