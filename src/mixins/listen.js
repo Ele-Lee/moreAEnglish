@@ -30,6 +30,9 @@ export default {
     },
     computed: {
         ...mapGetters(['currentLevelKey', 'listenClassKey', 'themeIndex']),
+        listenClassKey() {
+            return 'Ww'
+        },
         letterKey() {
             return this.listenClassKey[0].toLowerCase();
         },

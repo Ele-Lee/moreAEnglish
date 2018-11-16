@@ -4,9 +4,10 @@
         <div class="baseLine" >
             <Letter
                 v-for="letter in listenClassKey" :key="letter"
-                :sprite-id="letter" :class="letter" :resetSvgSize='true'
+                :sprite-id="letter" :resetSvgSize='true'
+                :class="[letter, listenClassKey.length > 1 && '__letters']"
             />
-            <!-- 动效 -->
+            <!-- 背景动效 -->
             <div
                 v-for="index in bgAnimations[themeIndex].num"
                 :key="bgAnimations[themeIndex].prefix+index"
@@ -67,11 +68,106 @@
             transform: translateY(2vh);
             > .Letter {
                 fill: rgb(255, 104, 105);
+                @gapH: 17.5%;
+                @lineH: 12%;
+                @lowerBaseTop: 25%;
                 &.D {
-                    height: 71%;
+                    height: @lineH*3 + @gapH*2;
                 }
                 &.d {
-                    height: 71%;
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.E {
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.e {
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                }
+                &.F {
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.f {
+                    height: @lineH*4 + @gapH*3;
+                }
+                &.M {
+                    height: @lineH*3 + @gapH*2;
+                    &.__letters {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 69% !important;
+                        transform-origin: left;
+                        transform: scaleX(0.8);
+                    }
+                }
+                &.m {
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                    &.__letters {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 70% !important;
+                        transform-origin: right;
+                        transform: scaleX(0.66);
+                    }
+                }
+                &.N {
+                    flex: 1;
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.n {
+                    flex: 0.95;
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                }
+                &.O {
+                    flex: 1;
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.o {
+                    flex: 0.5;
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                }
+                &.U {
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.u {
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                }
+                &.V {
+                    height: @lineH*3 + @gapH*2;
+                }
+                &.v {
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                }
+                &.W {
+                    height: @lineH*3 + @gapH*2;
+                    &.__letters {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 75% !important;
+                        height: @lineH*3 + @gapH*2 !important;
+                        transform-origin: left;
+                        transform: scaleX(0.81);
+                    }
+                }
+                &.w {
+                    margin-top: @lowerBaseTop;
+                    height: @lineH*2 + @gapH;
+                    &.__letters {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 57% !important;
+                        transform-origin: right;
+                        transform: scaleX(0.75);
+                    }
                 }
             }
             > .bg_animations {
